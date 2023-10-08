@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+        body {
+            text-align: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            min-width: 375px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            flex-wrap: wrap;
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+
+        .cont-cell {
+            padding: 20px;
+            border: solid 1px;
+            margin: 20px;
+            box-sizing: border-box;
+            height: 510px;
+            width: 250px;
+            border-radius: 10px;
+        }
+
+        @media (min-width: 375px) {
+            .container {
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: center;
+            }
+
+        }
+
+        @media (min-width: 850px) {
+            .container {
+                flex-wrap: nowrap;
+            }
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        h2 {
+            margin-bottom: 50px;
+        }
+
+        .input {
+            font-size: 20px;
+            line-height: 170%;
+            width: 100px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        h3 {
+            margin-bottom: 30px;
+            line-height: 160%;
+        }
+
+        button {
+            padding: 15px;
+            background-color: rgb(212, 212, 212);
+            border-radius: 5px;
+            border: none;
+            transition: background-color 0.3s;
+            /* Анімація для зміни кольору фону */
+            font-weight: bold;
+            margin-bottom: 5px;
+
+        }
+
+        button:hover {
+            background-color: rgb(150, 150, 150);
+            /* Змінюємо колір фону при наведенні */
+            cursor: pointer;
+            /* Змінюємо курсор при наведенні, щоб він був виглядають як посилання */
+        }
+
+
+        .result {
+            background-color: rgb(212, 212, 212);
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="text-center">Розрахунок вентиляції</h1>
+    <div class="container">
+        <div class="cont-cell">
+            <h3>Знайти обсяг <br>витрат повітря <br>L, м³/год </h3>
+            <div class="input-container">
+                <h4>Розмір, мм</h4>
+                <input type="text" id="ductSize" class="input" onkeydown="checkEnter1(event)">
+            </div>
+            <div class="input-container">
+                <h4>Швидкість, м/с</h4>
+                <input type="text" id="airSpeed" class="input" onkeydown="checkEnter1(event)">
+            </div>
+            <button id="calc1" onclick="calculateAirExchange()" type="button" class="button">Розрахувати</button>
+            <div class="result">
+                <p id="resultAir"></p>
+            </div>
+
+        </div>
+        <div class="cont-cell">
+            <h3>Знайти швидкість <br>повітря <br>V, м/с </h3>
+            <div class="input-container">
+                <h4>Обсяг повітря, м³/год</h4>
+                <input type="text" id="airFlow" class="input" onkeydown="checkEnter2(event)">
+            </div>
+            <div class="input-container">
+                <h4>Площа перерізу, м²</h4>
+                <input type="text" id="crossArea" class="input" onkeydown="checkEnter2(event)">
+            </div>
+            <button id="calc2" onclick="calculateAirSpeed()" type="button" class="button">Розрахувати</button>
+            <div class="result">
+                <p id="resultSpeed"></p>
+            </div>
+        </div>
+        <div class="cont-cell">
+            <h3>Знайти площу <br>поперечного перерізу<br>F, м² </h3>
+            <div class="input-container">
+                <h4>Обсяг повітря, м³/год</h4>
+                <input type="text" id="airFlow3" class="input" onkeydown="checkEnter3(event)">
+            </div>
+            <div class="input-container">
+                <h4>Швидкість, м/с</h4>
+                <input type="text" id="airSpeed3" class="input" onkeydown="checkEnter3(event)">
+            </div>
+            <button id="calc3" onclick="calculateCrossArea()" type="button" class="button">Розрахувати</button>
+            <div class="result">
+                <p id="resultCrossArea"></p>
+            </div>
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="cont-cell">
+            <h3>Розрахунок діаметру <br>D<sub>екв</sub>, мм </h3>
+            <div class="input-container">
+                <h4>Площа перерізу F, м²</h4>
+                <input type="text" id="inputCrossArea" class="input" onkeydown="checkEnter4(event)">
+            </div>
+            <button onclick="fillArea()" type="button" class="button">Прийняти</button>
+
+            <button id="calc4" onclick="calculateDiametr()" type="button" class="button">Розрахувати</button>
+            <div class="result">
+                <p id="resultDiametr"></p>
+            </div>
+        </div>
+        <div class="cont-cell">
+
+        </div>
+        <div class="cont-cell">
+
+        </div>
+    </div>
+
+
+
+
+    <script>
+
+        // Відслідковуємо натискання Enter
+        function checkEnter1(event) {
+            if (event.key === "Enter") {
+                calculateAirExchange();
+            }
+        }
+
+        // Функція розрахування витрат повітря
+        function calculateAirExchange() {
+            const getValue = (id) => parseFloat(document.getElementById(id).value);
+            const ductSize = getValue('ductSize');
+            const airSpeed = getValue('airSpeed');
+            const area = (Math.PI * (ductSize / 1000) ** 2) / 4;
+            const airExchange = area * airSpeed * 3600;
+            const resultAir = document.getElementById('resultAir'); // Використовуємо resultAir
+            if (airExchange >= 28 && airExchange <= 35000) {
+                const roundedAirExchange = Math.round(airExchange);
+                const formattedAirExchange = roundedAirExchange.toLocaleString();
+                resultAir.textContent = `L = ${formattedAirExchange} м³/год`; // Використовуємо resultAir
+            } else {
+                resultAir.textContent = "Помилка";
+            }
+        }
+
+
+        // Відслідковуємо натискання Enter
+        function checkEnter2(event) {
+            if (event.key === "Enter") {
+                calculateAirSpeed();
+            }
+        }
+        // Функція розрахування витрат повітря
+        function calculateAirSpeed() {
+            const getValue = (id) => parseFloat(document.getElementById(id).value.replace(',', '.'));
+            const airFlow = getValue('airFlow');
+            const crossArea = getValue('crossArea');
+            const speed = airFlow / (3600 * crossArea);
+            const resultSpeed = document.getElementById('resultSpeed'); // Використовуємо resultSpeed
+            if (!isNaN(speed) && speed >= 0 && speed <= 500) {
+                const roundedSpeed = speed.toFixed(1);
+                resultSpeed.textContent = `V = ${roundedSpeed} м/c`; // Використовуємо resultSpeed
+            } else {
+                resultSpeed.textContent = "Помилка";
+            }
+        }
+
+        // Відслідковуємо натискання Enter для третього вікна
+        function checkEnter3(event) {
+            if (event.key === "Enter") {
+                calculateCrossArea();
+            }
+        }
+
+        // Функція розрахування площі поперечного перерізу
+        function calculateCrossArea() {
+            const getValue = (id) => parseFloat(document.getElementById(id).value.replace(',', '.')); // Заміна коми на крапку
+            const airFlow3 = getValue('airFlow3');
+            const airSpeed3 = getValue('airSpeed3');
+            const crossArea = airFlow3 / (3600 * airSpeed3);
+            const resultCrossArea = document.getElementById('resultCrossArea');
+            if (!isNaN(crossArea) && crossArea >= 0) {
+                const roundedCrossArea = crossArea.toFixed(2);
+                resultCrossArea.textContent = `F = ${roundedCrossArea} м²`;
+            } else {
+                resultCrossArea.textContent = "Помилка";
+            }
+        }
+        // Відслідковуємо натискання Enter для четвертого вікна
+        function checkEnter4(event) {
+            if (event.key === "Enter") {
+                calculateDiametr();
+            }
+        }
+        // Функція розрахування еквівалентного діаметру
+
+        function calculateDiametr() {
+            const inputCrossArea = parseFloat(document.getElementById('inputCrossArea').value.replace(',', '.')); // Заміна коми на крапку
+            const diametr = Math.sqrt((4 * inputCrossArea) / 3.14) * 1000;
+            const resultDiametr = document.getElementById('resultDiametr');
+            if (!isNaN(inputCrossArea) && inputCrossArea >= 0) {
+                const roundedDiametr = diametr.toFixed(0);
+                resultDiametr.textContent = `D = ${roundedDiametr} мм`;
+            } else {
+                resultDiametr.textContent = "Помилка";
+            }
+        }
+
+        // Прийняти площу з попереднього розрахунку
+
+        // Прийняти площу з попереднього розрахунку
+        function fillArea() {
+            const resultCrossArea = document.getElementById('resultCrossArea');
+            const inputCrossArea = document.getElementById('inputCrossArea');
+            const areaText = resultCrossArea.textContent;
+            const area = areaText ? parseFloat(areaText.split('=')[1].trim().replace('м²', '')) : null;
+            inputCrossArea.value = area !== null ? area : '0';
+        }
+
+
+
+    </script>
+</body>
+
+</html>
