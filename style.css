@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+    text-align: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    min-width: 375px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+.cont-cell {
+    padding: 20px;
+    border: solid 1px;
+    margin: 20px;
+    box-sizing: border-box;
+    height: 510px;
+    width: 250px;
+    border-radius: 10px;
+}
+
+@media (min-width: 375px) {
+    .container {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+}
+
+@media (min-width: 850px) {
+    .container {
+        flex-wrap: nowrap;
+    }
+}
+
+.input-container {
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+h2 {
+    margin-bottom: 50px;
+}
+
+.input {
+    font-size: 20px;
+    line-height: 170%;
+    width: 100px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+h3 {
+    margin-bottom: 30px;
+    line-height: 160%;
+}
+
+button {
+    padding: 15px;
+    background-color: rgb(212, 212, 212);
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s;
+    /* Анімація для зміни кольору фону */
+    font-weight: bold;
+    margin-bottom: 5px;
+
+}
+
+button:hover {
+    background-color: rgb(150, 150, 150);
+    /* Змінюємо колір фону при наведенні */
+    cursor: pointer;
+    /* Змінюємо курсор при наведенні, щоб він був виглядають як посилання */
+}
+
+
+.result {
+    background-color: rgb(212, 212, 212);
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    margin-top: 30px;
+    border-radius: 5px;
+}
