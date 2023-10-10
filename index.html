@@ -72,21 +72,27 @@
             <div class="result">
                 <p id="resultDiametr"></p>
             </div>
+            <div class="result">
+                <p id="standartDiametr"></p>
+            </div>
         </div>
         <div class="cont-cell">
             <h3>Підбір прямокутного <br>повітропроводу</h3>
-            <div class="input-container">
-                <h4>Площа перерізу F, м²</h4>
-                <input type="text" id="inputCrossArea2" class="input">
+            <div style="margin: 5px;" class="input-container">
+                <h4 style="margin: 5px;">Площа перерізу F, м²</h4>
+                <input type="text" id="inputCrossArea2" class="input" onkeydown="checkEnter5(event)">
             </div>
             <button onclick="fillArea2()" type="button" class="button">Прийняти</button>
-            <div class="input-container">
-                <h4>Висота, мм</h4>
+            <div style="margin: 5px;" class="input-container">
+                <h4 style="margin: 5px">Висота, мм</h4>
                 <input type="text" id="inputHightDuct" class="input" onkeydown="checkEnter5(event)">
             </div>
             <button onclick="calcWightDuct()" type="button" class="button">Підібрати</button>
-            <div class="result">
+            <div class="result" style="margin-top: 5px">
                 <p id="resultWightDuct"></p>
+            </div>
+            <div class="result" style="margin-top: 15px">
+                <p id="selectStandartWight"></p>
             </div>
         </div>
         <div class="cont-cell">
@@ -178,11 +184,45 @@
             const resultDiametr = document.getElementById('resultDiametr');
             if (!isNaN(inputCrossArea) && inputCrossArea >= 0) {
                 const roundedDiametr = diametr.toFixed(0);
-                resultDiametr.textContent = `D = ${roundedDiametr} мм`;
+                // resultDiametr.textContent = `<sub>екв</sub> = ${roundedDiametr} мм`;
+                resultDiametr.innerHTML = `D<sub>екв</sub> = ${roundedDiametr} мм`;
+                // Виклик функції для підбору стандартного діаметру на основі обчисленого значення
+                const standardDiametr = selectStandartDiametr(diametr);
+
+                // Отримуємо елемент для виводу рекомендованого стандартного діаметру
+                const standartDiametrElement = document.getElementById('standartDiametr');
+                // Змінюємо вміст елемента на рекомендований стандартний діаметр
+                standartDiametrElement.textContent = `D = ${standardDiametr} мм`;
             } else {
                 resultDiametr.textContent = "Помилка";
             }
         }
+
+
+        // Функція підбору рекомендованого стандартного діаметру
+        function selectStandartDiametr(diametr) {
+            const rangeOfStandartDiametrs = [100, 125, 150, 160, 200, 225, 250, 315, 355, 400, 450, 500, 560, 630];
+            let calculatedDiametr = rangeOfStandartDiametrs[0]; // За замовчуванням, вибрати перше значення
+            let minDifference = Math.abs(calculatedDiametr - diametr);
+
+            for (let i = 1; i < rangeOfStandartDiametrs.length; i++) {
+                const currentDifference = Math.abs(rangeOfStandartDiametrs[i] - diametr);
+
+                if (currentDifference < minDifference) {
+                    minDifference = currentDifference;
+                    calculatedDiametr = rangeOfStandartDiametrs[i];
+                } else if (currentDifference === minDifference && currentDifference <= 0.19 * rangeOfStandartDiametrs[i]) {
+                    calculatedDiametr = rangeOfStandartDiametrs[i];
+                }
+            }
+
+            return calculatedDiametr;
+        }
+
+
+
+
+
 
         // Прийняти площу з попереднього розрахунку
         function fillArea() {
@@ -208,17 +248,65 @@
             }
         }
 
-        // Розрахувати ширину повітропровода
         function calcWightDuct() {
             const inputHightDuct = document.getElementById('inputHightDuct');
             const inputCrossArea2 = document.getElementById('inputCrossArea2');
-            const resultWightDuct = parseFloat(inputCrossArea2.value) / (parseFloat(inputHightDuct.value) / 1000);
-            const resultWightDuctText = isNaN(resultWightDuct) ? "Помилка" : `W = ${resultWightDuct.toFixed(2)} мм`;
+            const inputCrossAreaValue = parseFloat(inputCrossArea2.value.replace(',', '.'));
+            const resultWightDuct = inputCrossAreaValue / (parseFloat(inputHightDuct.value) / 1000) * 1000;
+            const resultWightDuctText = isNaN(resultWightDuct) ? "Помилка" : `${resultWightDuct.toFixed(0)}х${inputHightDuct.value}`;
+
             const resultWightDuctElement = document.getElementById('resultWightDuct');
             resultWightDuctElement.textContent = resultWightDuctText;
+
+            // Викликаємо функцію selectStandartWight та отримуємо результат
+            const selectedWight = selectStandartWight(resultWightDuct);
+
+            // Виводимо результат у відповідний <p> елемент
+            const selectStandartWightElement = document.getElementById('selectStandartWight');
+            selectStandartWightElement.textContent = `${selectedWight}х${inputHightDuct.value}`;
         }
 
-        // Треба доробити проблему з комою в F
+        function selectStandartWight(calculatedWight) {
+            const rangeOfStandartWight = [100, 150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000];
+            let selectedWight = rangeOfStandartWight[0]; // За замовчуванням вибираємо перший стандартний розмір
+
+            for (let i = 1; i < rangeOfStandartWight.length; i++) {
+                const currentWight = rangeOfStandartWight[i];
+                const prevWight = rangeOfStandartWight[i - 1];
+
+                const delta = currentWight - prevWight;
+                const threshold = delta * 0.19; // 19% від різниці
+
+                if (calculatedWight >= prevWight && calculatedWight <= currentWight) {
+                    if (calculatedWight - prevWight > threshold) {
+                        selectedWight = currentWight;
+                    } else {
+                        selectedWight = prevWight;
+                    }
+                    break;
+                }
+            }
+
+            return selectedWight;
+        }
+
+        // !!! Запрацював коректний підбір розміру прямокутного повітропроводу !!!
+        // Тепер треба відкорегувати, полагодити так само круглий
+        // А ще треба внести сюди захист від помилок
+
+
+        // Функція для тестування
+        document.addEventListener("DOMContentLoaded", function () {
+            // Отримуємо посилання на поле вводу за його ідентифікатором
+            var inputElement = document.getElementById("inputHightDuct");
+            var inputElement2 = document.getElementById("inputCrossArea2");
+            // Встановлюємо значення 200 в поле вводу
+            inputElement.value = "200";
+            inputElement2.value = "0.15";
+        });
+
+
+
 
     </script>
 </body>
