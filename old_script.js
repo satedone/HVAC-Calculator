@@ -195,8 +195,8 @@ function selectStandartWight(calculatedWight) {
 // Функція для тестування
 document.addEventListener("DOMContentLoaded", function () {
     // Отримуємо посилання на поле вводу за його ідентифікатором
-    var inputElement = document.getElementById("inputHightDuct");
-    var inputElement2 = document.getElementById("inputCrossArea2");
+    let inputElement = document.getElementById("inputHightDuct");
+    let inputElement2 = document.getElementById("inputCrossArea2");
     // Встановлюємо значення 200 в поле вводу
     inputElement.value = "200";
     inputElement2.value = "0.15";

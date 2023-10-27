@@ -85,6 +85,8 @@ button {
 
 }
 
+
+
 button:hover {
     background-color: rgb(150, 150, 150);
     /* Змінюємо колір фону при наведенні */
