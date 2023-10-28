@@ -230,3 +230,16 @@ function selectStandartDiametr(diametr) {
 
     return calculatedDiametr;
 }
+
+// Функція приняття площі F з 3 до 4 вікна 
+function fillArea4() {
+    const resultCrossAreaValue = parseFloat(document.getElementById('resultCrossArea').textContent.split('=')[1].trim().split(' ')[0]);
+    data.crossArea4 = resultCrossAreaValue;
+    document.getElementById('crossArea4').value = resultCrossAreaValue;
+}
+
+function fillArea5() {
+    const resultCrossAreaValue = parseFloat(document.getElementById('resultCrossArea').textContent.split('=')[1].trim().split(' ')[0]);
+    data.crossArea4 = resultCrossAreaValue;
+    document.getElementById('crossArea5').value = resultCrossAreaValue;
+}

@@ -1,12 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&family=Jost:wght@400;600;700&family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
 body {
     text-align: center;
     height: 100vh;
     margin: 0;
     font-family: 'Roboto', sans-serif;
     min-width: 375px;
+    background-color: #A0D7FF;
+    background-image: url("img/ellipse.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 70%;
+    background-position: 10% 20%;
+
 }
+
+body::before {
+    content: '';
+    position: fixed;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: #109dff;
+    top: 50%;
+    left: 80%;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #109dff;
+    top: 10%;
+    left: 95%;
+}
+
 
 h1 {
     margin-bottom: 20px;
@@ -22,15 +54,43 @@ h1 {
     margin: 0 auto;
 }
 
+.blur-container {
+    position: relative;
+    /* width: 100%; */
+    /* Зробити ширину контейнера повністю відповідною до вмісту */
+    /* height: 100vh; */
+    /* Зробити висоту контейнера рівною висоті вікна браузера */
+    /* overflow: hidden; */
+    /* Приховати зайві вміст, який виходить за межі контейнера */
+}
+
+.background-blur {
+    position: absolute;
+    top: 50px;
+    left: 40px;
+    height: 500px;
+    width: 240px;
+    filter: blur(30px);
+    background-color: black;
+
+}
+
 .cont-cell {
     padding: 20px;
-    border: solid 1px;
     margin: 20px;
     box-sizing: border-box;
     height: 510px;
     width: 250px;
-    border-radius: 10px;
+    background-image: url("img/cell.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    color: #818181;
+    opacity: 0.9;
 }
+
+
+
+
 
 @media (min-width: 375px) {
     .container {
@@ -49,6 +109,7 @@ h1 {
 
 .input-container {
     margin-bottom: 20px;
+    position: relative;
 }
 
 p {
@@ -64,44 +125,252 @@ h2 {
     font-size: 20px;
     line-height: 170%;
     width: 100px;
-    border-radius: 5px;
+    border-radius: 18px;
     text-align: center;
+    color: white;
+    background-color: transparent;
+    border: solid 0.1px #818181;
+
 }
 
 h3 {
     margin-bottom: 30px;
     line-height: 160%;
+    color: white;
+
 }
 
 button {
     padding: 15px;
-    background-color: rgb(212, 212, 212);
-    border-radius: 5px;
+    background-color: #005DB2;
+    border-radius: 18px;
     border: none;
     transition: background-color 0.3s;
-    /* Анімація для зміни кольору фону */
     font-weight: bold;
     margin-bottom: 5px;
+    color: #29A8FF;
+}
 
+button:hover {
+    background-color: #1991FF;
+    cursor: pointer;
+    color: white;
 }
 
 
+.filling {
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.659);
+    border-radius: 18px;
+    border: none;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: white;
+}
 
-button:hover {
-    background-color: rgb(150, 150, 150);
-    /* Змінюємо колір фону при наведенні */
+.filling:hover {
+    background-color: black;
     cursor: pointer;
-    /* Змінюємо курсор при наведенні, щоб він був виглядають як посилання */
+
 }
 
 
 .result {
-    background-color: rgb(212, 212, 212);
+    background-color: transparent;
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: black;
+    color: white;
     margin-top: 30px;
-    border-radius: 5px;
+    border-radius: 18px;
+}
+
+
+.arrow-button {
+    height: 35px;
+    /* Встановлює висоту кнопки рівною висоті input */
+}
+
+.input {
+    height: 35px;
+}
+
+.arrow-cont {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+
+.arrow-button,
+.input {
+    height: 35px;
+    margin: 0;
+}
+
+.arrow-button {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    font-size: 16px;
+    position: relative;
+}
+
+
+.arrow-button:hover::before {
+    content: "Прийняти останнє значення";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: -20px;
+    font-size: 12px;
+    width: max-content;
+    color: rgb(128, 128, 128);
+
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.logo-word {
+    font-weight: 600;
+    font-size: 50px;
+    font-family: 'Poppins';
+    color: white;
+    display: flex;
+    white-space: nowrap;
+    align-items: baseline;
+    background-color: #2ca8ff;
+    border-radius: 40px;
+    margin: 20px;
+    width: 250px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+
+}
+
+.logo-word div {
+    vertical-align: bottom;
+}
+
+.n,
+.o {
+    font-size: 40px;
+    animation: showLetters 0.2s ease-out forwards;
+    opacity: 0;
+    margin: -45px;
+    animation-delay: 3s;
+    position: relative;
+
+
+}
+
+.n {
+    left: -43px;
+}
+
+.o {
+    left: 43px;
+}
+
+
+.i {
+    position: relative;
+    animation: moveLetterI 2s ease-in forwards;
+    margin: 0 80px;
+    left: 10px;
+    opacity: 0;
+}
+
+.p {
+    position: relative;
+    animation: moveLetterP 2s ease-in forwards;
+    margin: 0 80px;
+    right: 7px;
+    opacity: 0;
+}
+
+.t {
+    animation: moveLetterT 1s ease-in forwards;
+    opacity: 0;
+}
+
+
+@keyframes moveLetterI {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    70% {
+        left: 10px;
+    }
+
+    100% {
+        left: -12px;
+        opacity: 1;
+    }
+}
+
+@keyframes moveLetterP {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    70% {
+        right: 7px;
+    }
+
+    100% {
+        right: -12px;
+        opacity: 1;
+    }
+}
+
+@keyframes moveLetterT {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes showLetters {
+    0% {
+        opacity: 0;
+
+    }
+
+    70% {
+        opacity: 0.3;
+
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+.title-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
