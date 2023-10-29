@@ -109,7 +109,7 @@
                 </div>
                 <button style="margin: 25px" id="calc4" onclick="calculateDiametr()" type="button"
                     class="button">Розрахувати</button>
-                <div class="result" style="margin-top: 60px">
+                <div class="result" style="margin-top: 60px; color: gray;">
                     <p id="resultDiametr"></p>
                 </div>
                 <div class="result" style="margin-top: 0px" ;>
@@ -121,7 +121,7 @@
             <div class="background-blur">
             </div>
             <div class="cont-cell">
-                <h3>Підбір прямокутного <br>повітропроводу</h3>
+                <h3>Підбір прямокутного <br>повітроводу</h3>
                 <h4>Площа перерізу F, м²</h4>
                 <div class="arrow-cont">
 
@@ -133,7 +133,7 @@
                     <input type="text" id="heightDuct5" class="input" onkeydown="checkEnter5(event)">
                 </div>
                 <button onclick="calcWightDuct()" type="button" class="button">Підібрати</button>
-                <div class="result" style="margin-top: 20px">
+                <div class="result" style="margin-top: 20px; color: gray;">
                     <p id="resultWightDuct"></p>
                 </div>
                 <div class="result" style="margin-top: 0px">
@@ -145,7 +145,24 @@
             <div class="background-blur">
             </div>
             <div class="cont-cell">
-
+                <h3>Плоскоовальний <br>повітропровід</h3>
+                <h4>Площа перерізу F, м²</h4>
+                <div class="arrow-cont">
+            
+                    <button onclick="fillArea6()" type="button" class="arrow-button">></button>
+                    <input type="text" id="crossArea6" class="input" onkeydown="checkEnter6(event)">
+                </div>
+                <div class="input-container">
+                    <h4 style="margin: 15px">Висота H, мм</h4>
+                    <input type="text" id="heightDuct6" class="input" onkeydown="checkEnter6(event)">
+                </div>
+                <button onclick="calcOvalDuct()" type="button" class="button">Підібрати</button>
+                <div class="result" style="margin-top: 20px; color: gray;">
+                    <p id="resultOvalWightDuct"></p>
+                </div>
+                <div class="result" style="margin-top: 0px">
+                    <p id="selectStandartOvalWight"></p>
+                </div>
             </div>
         </div>
     </div>

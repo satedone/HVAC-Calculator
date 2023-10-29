@@ -9,7 +9,9 @@ let data = {
     airSpeed3: 0,
     crossArea4: 0,
     crossArea5: 0,
-    heightDuct5: 0
+    heightDuct5: 0,
+    crossArea6: 0,
+    heightDuct6: 0
 };
 
 
@@ -27,6 +29,8 @@ function updateData() {
     data.crossArea4 = getValue('crossArea4');
     data.crossArea5 = getValue('crossArea5');
     data.heightDuct5 = getValue('heightDuct5');
+    data.crossArea6 = getValue('crossArea6');
+    data.heightDuct6 = getValue('heightDuct6');
 }
 
 // Функція розрахунку витрат повітря
@@ -58,7 +62,7 @@ function calculateAirExchange() {
     }
 }
 
-// Функція розрахування швидкості повітря
+// Функція розрахунку швидкості повітря
 function calculateAirSpeed() {
     updateData();
     const speed = data.airFlow2 / (3600 * data.crossArea2);
@@ -71,8 +75,7 @@ function calculateAirSpeed() {
     }
 }
 
-
-// Функція розрахування площі поперечного перерізу
+// Функція розрахунку площі поперечного перерізу
 function calculateCrossArea() {
     updateData();
 
@@ -87,35 +90,34 @@ function calculateCrossArea() {
 }
 
 ////////////  Відслідковуємо натискання Enter ////////////
-
 function checkEnter1(event) {
     if (event.key === "Enter") {
         calculateAirExchange();
     }
 }
-
 function checkEnter2(event) {
     if (event.key === "Enter") {
         calculateAirSpeed();
     }
 }
-
 function checkEnter3(event) {
     if (event.key === "Enter") {
         calculateCrossArea();
     }
 }
-
-
 function checkEnter4(event) {
     if (event.key === "Enter") {
         calculateDiametr();
     }
 }
-
 function checkEnter5(event) {
     if (event.key === "Enter") {
         calcWightDuct();
+    }
+}
+function checkEnter6(event) {
+    if (event.key === "Enter") {
+        calcOvalDuct();
     }
 }
 /////////////////////////////////////////
@@ -123,25 +125,32 @@ function checkEnter5(event) {
 //////////// Кнопка "Заповнити данні"  ////////////
 
 function filling() {
+
     document.getElementById("ductSize1").value = 250;
     document.getElementById("airSpeed1").value = 4;
     document.getElementById("airFlow2").value = 707;
     document.getElementById("crossArea2").value = 0.05;
-    document.getElementById("airFlow3").value = 707;
-    document.getElementById("airSpeed3").value = 4;
-    document.getElementById("crossArea4").value = 0.05;
-    document.getElementById("crossArea5").value = 0.05;
+    document.getElementById("airFlow3").value = 3600;
+    document.getElementById("airSpeed3").value = 5;
+    document.getElementById("crossArea4").value = 0.2;
+    document.getElementById("crossArea5").value = 0.2;
     document.getElementById("heightDuct5").value = 300;
+    document.getElementById("crossArea6").value = 0.2;
+    document.getElementById("heightDuct6").value = 250;
+    calculateAirExchange();
+    calculateAirSpeed();
+    calculateCrossArea();
+    calculateDiametr();
+    calcWightDuct();
+    calcOvalDuct();
 }
 /////////////////////////////////////////
 
 // Функція розрахунку ширини прямокутного повітропровіду 
-
 function calcWightDuct() {
     updateData();
-
     const resultWightDuct = data.crossArea5 / (parseFloat(data.heightDuct5) / 1000) * 1000;
-    const resultWightDuctText = isNaN(resultWightDuct) ? "Помилка" : `${resultWightDuct.toFixed(0)}х${data.heightDuct5}`;
+    const resultWightDuctText = isNaN(resultWightDuct) ? "Помилка" : `${resultWightDuct.toFixed(0)} х ${data.heightDuct5}`;
 
     const resultWightDuctElement = document.getElementById('resultWightDuct');
     resultWightDuctElement.textContent = resultWightDuctText;
@@ -151,11 +160,10 @@ function calcWightDuct() {
 
     // Виводимо результат у відповідний <p> елемент
     const selectStandartWightElement = document.getElementById('selectStandartWight');
-    selectStandartWightElement.textContent = `${selectedWight}х${data.heightDuct5}`;
+    selectStandartWightElement.textContent = `${selectedWight} х ${data.heightDuct5}`;
 }
 
 // Функція підбору стандартного прямокутного повітропровіду 
-
 function selectStandartWight(calculatedWight) {
     const rangeOfStandartWight = [100, 150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 2000];
     let selectedWight = rangeOfStandartWight[0]; // За замовчуванням вибираємо перший стандартний розмір
@@ -179,9 +187,6 @@ function selectStandartWight(calculatedWight) {
 
     return selectedWight;
 }
-
-
-
 
 
 // Функція розрахування еквівалентного діаметру
@@ -237,9 +242,97 @@ function fillArea4() {
     data.crossArea4 = resultCrossAreaValue;
     document.getElementById('crossArea4').value = resultCrossAreaValue;
 }
-
 function fillArea5() {
     const resultCrossAreaValue = parseFloat(document.getElementById('resultCrossArea').textContent.split('=')[1].trim().split(' ')[0]);
     data.crossArea4 = resultCrossAreaValue;
     document.getElementById('crossArea5').value = resultCrossAreaValue;
 }
+function fillArea6() {
+    const resultCrossAreaValue = parseFloat(document.getElementById('resultCrossArea').textContent.split('=')[1].trim().split(' ')[0]);
+    data.crossArea4 = resultCrossAreaValue;
+    document.getElementById('crossArea6').value = resultCrossAreaValue;
+}
+
+
+
+
+// Розрахунок плоскоовала
+function calcOvalDuct() {
+    updateData();
+
+    const allowedHeights = [150, 200, 250, 300, 350, 400, 450, 500];
+
+
+    const resultOvalWightDuct = (((data.crossArea6 - ((3.14 * (parseFloat(data.heightDuct6) / 1000) * (parseFloat(data.heightDuct6) / 1000)) / 4)) / (parseFloat(data.heightDuct6) / 1000)) + (parseFloat(data.heightDuct6) / 1000)) * 1000;
+    
+    const resultOvalWightDuctText = (isNaN(resultOvalWightDuct) || !allowedHeights.includes(data.heightDuct6))
+        ? "Помилка"
+        : `${resultOvalWightDuct.toFixed(0)} х ${data.heightDuct6}`;
+
+    const resultOvalWightDuctElement = document.getElementById('resultOvalWightDuct');
+    resultOvalWightDuctElement.textContent = resultOvalWightDuctText;
+
+    // Викликаємо функцію підбора стандарту
+    const selectedOvalWight = selectStandarOvaltWight(resultOvalWightDuct);
+
+    // Виводимо результат у відповідний <p> елемент
+    const selectStandartOvalWightElement = document.getElementById('selectStandartOvalWight');
+    selectStandartOvalWightElement.textContent = `${selectedOvalWight} х ${data.heightDuct6}`;
+}
+
+// Функція підбору стандартного овального повітропровіду 
+function selectStandarOvaltWight(calculatedOvalWight) {
+    let selectedOvalWight = 0; // Значення за замовчуванням
+
+    if (data.heightDuct6 === 150) {
+        const rangeOfStandartOvalWight150 = [420, 480, 555, 630, 710, 805, 915, 1045];
+        selectedOvalWight = getSelectedOvalWight(calculatedOvalWight, rangeOfStandartOvalWight150);
+    } else if (data.heightDuct6 === 200) {
+        const rangeOfStandartOvalWight200 = [455, 525, 605, 685, 780, 890, 1015];
+        selectedOvalWight = getSelectedOvalWight(calculatedOvalWight, rangeOfStandartOvalWight200);
+    } else if (data.heightDuct6 === 250) {
+        const rangeOfStandartOvalWight250 = [495, 575, 655, 750, 860, 985];
+        selectedOvalWight = getSelectedOvalWight(calculatedOvalWight, rangeOfStandartOvalWight250);
+    } else if (data.heightDuct6 === 300) {
+        const rangeOfStandartOvalWight300 = [465, 545, 625, 720, 830, 960];
+        selectedOvalWight = getSelectedOvalWight(calculatedOvalWight, rangeOfStandartOvalWight300);
+    } else if (data.heightDuct6 === 350) {
+        const rangeOfStandartOvalWight350 = [520, 595, 690, 805, 930];
+        selectedOvalWight = getSelectedOvalWight(calculatedOvalWight, rangeOfStandartOvalWight350);
+    } else if (data.heightDuct6 === 400) {
+        const rangeOfStandartOvalWight400 = [570, 665, 775, 900];
+        selectedOvalWight = getSelectedOvalWight(calculatedOvalWight, rangeOfStandartOvalWight400);
+    } else if (data.heightDuct6 === 450) {
+        const rangeOfStandartOvalWight450 = [635, 745, 870];
+        selectedOvalWight = getSelectedOvalWight(calculatedOvalWight, rangeOfStandartOvalWight450);
+    } else if (data.heightDuct6 === 500) {
+        const rangeOfStandartOvalWight500 = [715, 840];
+        selectedOvalWight = getSelectedOvalWight(calculatedOvalWight, rangeOfStandartOvalWight500);
+    }
+
+    return selectedOvalWight;
+}
+
+function getSelectedOvalWight(calculatedOvalWight, range) {
+    let selectedOvalWight = range[0]; // За замовчуванням вибираємо перше значення списку
+
+    for (let i = 1; i < range.length; i++) {
+        const currentOvalWight = range[i];
+        const prevOvalWight = range[i - 1];
+
+        const deltaOval = currentOvalWight - prevOvalWight;
+        const thresholdOval = deltaOval * 0.19; // 19% від різниці
+
+        if (calculatedOvalWight >= prevOvalWight && calculatedOvalWight <= currentOvalWight) {
+            if (calculatedOvalWight - prevOvalWight > thresholdOval) {
+                selectedOvalWight = currentOvalWight;
+            } else {
+                selectedOvalWight = prevOvalWight;
+            }
+            break;
+        }
+    }
+
+    return selectedOvalWight;
+}
+
