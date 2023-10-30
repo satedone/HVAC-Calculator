@@ -264,7 +264,7 @@ function calcOvalDuct() {
 
 
     const resultOvalWightDuct = (((data.crossArea6 - ((3.14 * (parseFloat(data.heightDuct6) / 1000) * (parseFloat(data.heightDuct6) / 1000)) / 4)) / (parseFloat(data.heightDuct6) / 1000)) + (parseFloat(data.heightDuct6) / 1000)) * 1000;
-    
+
     const resultOvalWightDuctText = (isNaN(resultOvalWightDuct) || !allowedHeights.includes(data.heightDuct6))
         ? "Помилка"
         : `${resultOvalWightDuct.toFixed(0)} х ${data.heightDuct6}`;
@@ -336,3 +336,34 @@ function getSelectedOvalWight(calculatedOvalWight, range) {
     return selectedOvalWight;
 }
 
+
+
+
+
+document.getElementById('sendToTelegramButton').addEventListener('click', function () {
+    // Зчитайте дані з полів форми
+    var name = document.getElementById('name').value;
+    var phone = document.getElementById('phone').value;
+
+    // Створіть об'єкт з даними, які ви хочете відправити
+    var formData = new FormData();
+    formData.append('name', name);
+    formData.append('phone', phone);
+
+    // Виконайте AJAX-запит і передайте дані форми
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', './send.php', true);
+    xhr.send(formData);
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Отримали успішну відповідь від сервера (HTTP статус 200)
+            var response = xhr.responseText;
+            // Можливо, додайте код для обробки відповіді тут, якщо потрібно
+            console.log(response);
+        } else if (xhr.readyState === 4) {
+            // Виникла помилка під час виконання запиту
+            console.error('Помилка при виконанні запиту до сервера');
+        }
+    };
+});
